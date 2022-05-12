@@ -6,3 +6,10 @@ Projektbeschereibung:
 
 Flugbuchungssystem, das einfach und schnell zu bedienen sollte.
 
+Devs:
+- Aiman
+- David
+- Shyam
+- Samer
+
+
