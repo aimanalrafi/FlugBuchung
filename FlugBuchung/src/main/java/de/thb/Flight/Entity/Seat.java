@@ -6,9 +6,9 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class Seats {
+public class Seat {
+    int seatId;
     int seatNumber;
     Flight flight;
-    Customer vorname;
-    Customer nachname;
+
 }

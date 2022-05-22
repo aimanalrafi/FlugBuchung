@@ -5,9 +5,14 @@ import java.util.Date;
 
 public class Flight {
 
+    int flightId;
     int flightNo;
-    Date arrivalDate;
-    Date departureDate;
-    ArrayList<Seats> seat;
+    String abflugsort;
+    String zielort;
+    Date departureDate; //time and date
+    Date arrivalDate; //time and date
+    ArrayList<Seat> seat;
+
+
 
 }
