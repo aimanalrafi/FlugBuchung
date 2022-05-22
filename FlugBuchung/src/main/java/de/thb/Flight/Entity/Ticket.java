@@ -1,36 +1,26 @@
 package de.thb.Flight.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
-
-
+import lombok.*;
 
 @Data
-// standart Constructor
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-
-
 public class Ticket {
-
-
     @Id
-    private int id ;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "User")
-    private User user ;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-
-
-
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne
+    @JoinColumn(name = "flight_id")
     private Flight flight;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToOne
+    @JoinColumn(name = "seat_id")
     private Seat seat;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

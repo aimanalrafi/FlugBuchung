@@ -8,19 +8,18 @@ import javax.persistence.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
 @Data
 @Table(name = "Flight")
 public class Flight {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private int id;
     //flight nummer
     private int nummer;
@@ -28,7 +27,14 @@ public class Flight {
     private String zielort;
     private Date departureDate; //time and date
     private Date arrivalDate; //time and date
-    private ArrayList<Seat> seat;
+
+    @OneToMany
+    @JoinColumn(name = "seat_id")
+    private List<Seat> seat;
+
+    @OneToOne
+    @JoinColumn(name = "ticket_id")
+    private Ticket ticket;
 
 
 
