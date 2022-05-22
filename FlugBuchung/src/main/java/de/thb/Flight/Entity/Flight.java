@@ -1,18 +1,34 @@
 package de.thb.Flight.Entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
 import java.util.ArrayList;
 import java.util.Date;
 
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+
+@Data
+@Table(name = "Flight")
 public class Flight {
 
-    int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    private int id;
     //flight nummer
-    int nummer;
-    String abflugsort;
-    String zielort;
-    Date departureDate; //time and date
-    Date arrivalDate; //time and date
-    ArrayList<Seat> seat;
+    private int nummer;
+    private String abflugsort;
+    private String zielort;
+    private Date departureDate; //time and date
+    private Date arrivalDate; //time and date
+    private ArrayList<Seat> seat;
 
 
 
