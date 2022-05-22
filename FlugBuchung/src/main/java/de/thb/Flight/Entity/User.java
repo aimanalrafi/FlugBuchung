@@ -31,6 +31,10 @@ public class User {
     @NotNull
     private String password;
 
+    @OneToOne
+    @JoinColumn(name = "ticket_id")
+    private Ticket ticket;
+
     public User(){
         setRoles("USER");
     }

@@ -2,26 +2,29 @@ package de.thb.Flight.Entity;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
+@Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-
-
 public class Seat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    int id;
+    private int id;
     //Seat Nummer
-    int nummer;
+    private int nummer;
+
+    @ManyToOne
+    @JoinColumn(name = "flight_id")
+    private Flight flight;
 
     @OneToOne
+    @JoinColumn(name = "ticket_id")
     private Ticket ticket;
+
 }
