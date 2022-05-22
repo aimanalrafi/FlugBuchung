@@ -15,9 +15,19 @@ import javax.persistence.Entity;
 
 public class UserDetail implements UserDetails{
 
+    User user;
+
+    public UserDetail(User user){
+        super();
+        this.user = user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + getRoles());
+        authorities.add(authority);
+        return authorities;
     }
 
     @Override
@@ -48,5 +58,10 @@ public class UserDetail implements UserDetails{
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    public String  getRoles(){
+        return user.getRoles();
+
     }
 }

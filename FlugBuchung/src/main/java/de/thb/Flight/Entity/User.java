@@ -5,16 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.*;
 
 
 @Data
 @Entity
 @AllArgsConstructor
+@Table(name = "User")
 public class User {
     /*
     Primary Key
@@ -27,6 +25,7 @@ public class User {
     private String roles;
 
     @NotNull
+    @Column(nullable = false, unique = true)
     String email;
 
     @NotNull
