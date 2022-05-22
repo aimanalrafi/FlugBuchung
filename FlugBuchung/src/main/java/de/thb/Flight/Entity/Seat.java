@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Seat {
-    int seatId;
-    int seatNumber;
+    int id;
+    //Seat Nummer
+    int nummer;
     Flight flight;
 
 }
