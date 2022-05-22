@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,6 +21,7 @@ public class Seat {
     int id;
     //Seat Nummer
     int nummer;
-    Flight flight;
 
+    @OneToOne
+    private Ticket ticket;
 }
