@@ -12,6 +12,7 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 
+//UserDetail
 
 public class UserDetail implements UserDetails{
 

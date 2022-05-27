@@ -7,10 +7,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+//Seat
+
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "Seat")
 public class Seat {
 
     @Id

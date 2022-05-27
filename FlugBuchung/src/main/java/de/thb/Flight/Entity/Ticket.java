@@ -3,10 +3,13 @@ package de.thb.Flight.Entity;
 import javax.persistence.*;
 import lombok.*;
 
+//Ticket
+
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "Ticket")
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
