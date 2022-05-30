@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
-import javax.*;
 
 //User
 
