@@ -33,7 +33,7 @@ public class User {
     private String password;
 
     @OneToOne
-    @JoinColumn(name = "ticket_id")
+    @JoinColumn(name = "ticket_id") //foreign key
     private Ticket ticket;
 
     public User(){

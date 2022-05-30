@@ -16,14 +16,14 @@ public class Ticket {
     private int id;
 
     @OneToOne
-    @JoinColumn(name = "flight_id")
+    @JoinColumn(name = "flight_id") //foreign key of ticket
     private Flight flight;
 
     @OneToOne
-    @JoinColumn(name = "seat_id")
+    @JoinColumn(name = "seat_id") //foreign key of ticket
     private Seat seat;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id") //foreign key of ticket
     private User user;
 }

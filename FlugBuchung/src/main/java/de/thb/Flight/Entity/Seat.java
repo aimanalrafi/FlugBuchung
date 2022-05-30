@@ -23,6 +23,9 @@ public class Seat {
     private int nummer;
     private float price;
 
+    //Attribute to check if seat is available
+    private boolean available;
+
     @ManyToOne
     @JoinColumn(name = "flight_id")
     private Flight flight;
