@@ -21,6 +21,7 @@ public class Seat {
     private int id;
     //Seat Nummer
     private int nummer;
+    private float price;
 
     @ManyToOne
     @JoinColumn(name = "flight_id")

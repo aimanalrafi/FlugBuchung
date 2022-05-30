@@ -26,8 +26,24 @@ public class Flight {
     private int nummer;
     private String abflugsort;
     private String zielort;
+
+    @Temporal(TemporalType.DATE)
     private Date departureDate; //time and date
+
+    @Temporal(TemporalType.TIME)
+    private Date departureTime; //time and date
+
+    @Temporal(TemporalType.DATE)
     private Date arrivalDate; //time and date
+
+    @Temporal(TemporalType.TIME)
+    private Date arrivalTime; //time and date
+
+//    private float price;
+
+//    public float getPrice(float price){
+//        return this.price = Seat.getPrice();
+//    }
 
     @OneToMany
     @JoinColumn(name = "seat_id")
