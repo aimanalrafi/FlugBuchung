@@ -16,6 +16,10 @@ public class Ticket {
     private int id;
 
     @OneToOne
+    @JoinColumn(name = "user_id") //foreign key of ticket
+    private User user;
+
+    @OneToOne
     @JoinColumn(name = "flight_id") //foreign key of ticket
     private Flight flight;
 
@@ -23,7 +27,10 @@ public class Ticket {
     @JoinColumn(name = "seat_id") //foreign key of ticket
     private Seat seat;
 
-    @OneToOne
-    @JoinColumn(name = "user_id") //foreign key of ticket
-    private User user;
+
+    public Ticket(User user, Flight flight, Seat seat) {
+        this.user = user;
+        this.flight = flight;
+        this.seat = seat;
+    }
 }
