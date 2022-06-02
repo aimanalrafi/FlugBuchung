@@ -15,16 +15,13 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id") //foreign key of ticket
+    @OneToOne(mappedBy = "user_id", fetch = FetchType.EAGER)//foreign key of user
     private User user;
 
-    @OneToOne
-    @JoinColumn(name = "flight_id") //foreign key of ticket
+    @OneToOne(mappedBy = "flight_id", fetch = FetchType.EAGER)//foreign key of ticket
     private Flight flight;
 
-    @OneToOne
-    @JoinColumn(name = "seat_id") //foreign key of ticket
+    @OneToOne(mappedBy = "seat_id", fetch = FetchType.EAGER)//foreign key of ticket
     private Seat seat;
 
 

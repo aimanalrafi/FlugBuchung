@@ -31,8 +31,8 @@ public class User {
     @NotNull
     private String password;
 
-    @OneToOne
-    @JoinColumn(name = "ticket_id") //foreign key
+
+    @OneToOne(mappedBy = "ticket_id", fetch = FetchType.EAGER)//foreign key of ticket
     private Ticket ticket;
 
     public User(){
