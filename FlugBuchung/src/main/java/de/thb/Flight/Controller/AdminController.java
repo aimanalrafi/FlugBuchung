@@ -1,4 +1,4 @@
-
+/*
 package de.thb.Flight.Controller;
 
 import de.thb.Flight.Entity.User;
@@ -66,3 +66,4 @@ public class AdminController {
     }
 
 }
+*/

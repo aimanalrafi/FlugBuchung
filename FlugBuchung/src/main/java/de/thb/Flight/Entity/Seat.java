@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-//Seat
 
 @Data
 @Entity
@@ -26,12 +25,11 @@ public class Seat {
     //Attribute to check if seat is available
     private boolean available;
 
-    @ManyToOne
-    @JoinColumn(name = "flight_id")
+    //@ManyToOne(mappedBy = "seat_id", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "flight_id", fetch = FetchType.EAGER)
     private Flight flight;
 
-    @OneToOne
-    @JoinColumn(name = "ticket_id")
+    @OneToOne(mappedBy = "ticket_id", fetch = FetchType.EAGER)
     private Ticket ticket;
 
 }
