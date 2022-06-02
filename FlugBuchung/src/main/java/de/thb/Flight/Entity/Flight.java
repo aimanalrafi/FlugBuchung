@@ -46,12 +46,11 @@ public class Flight {
 //        return this.price = Seat.getPrice();
 //    }
 
-    @OneToMany(mappedBy = "seat_id", fetch = FetchType.EAGER)
-
+    @OneToMany(mappedBy = "flight")
     private List<Seat> seat;
 
-    @OneToOne(mappedBy = "ticket_id", fetch = FetchType.EAGER)
-    private Ticket ticket;
+    @OneToMany(mappedBy = "flight")
+    private List<Ticket> ticket;
 
 
 

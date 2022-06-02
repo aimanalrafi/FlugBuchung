@@ -32,8 +32,12 @@ public class User {
     private String password;
 
 
-    @OneToOne(mappedBy = "ticket_id", fetch = FetchType.EAGER)//foreign key of ticket
+    @OneToOne(mappedBy = "user")//foreign key of ticket
     private Ticket ticket;
+
+    @OneToOne(fetch = FetchType.EAGER)//foreign key of user
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
 
     public User(){
         setRoles("USER");

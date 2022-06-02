@@ -25,11 +25,14 @@ public class Seat {
     //Attribute to check if seat is available
     private boolean available;
 
-    //@ManyToOne(mappedBy = "seat_id", fetch = FetchType.EAGER)
-    @OneToOne(mappedBy = "flight_id", fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)//foreign key of user
+    @JoinColumn(name = "flight_id")
     private Flight flight;
 
-    @OneToOne(mappedBy = "ticket_id", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "seat")
     private Ticket ticket;
+
+    @OneToOne(mappedBy = "seat")
+    private User user;
 
 }
