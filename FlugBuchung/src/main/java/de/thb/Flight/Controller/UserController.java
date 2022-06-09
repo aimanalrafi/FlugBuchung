@@ -33,7 +33,7 @@ public class UserController {
     }
     @PostMapping("/save-user")
     public User saveUser(@RequestBody User user) {
-        return this.userService.saveUser(user);
+        return this.userService.createUser(user);
     }
 
     @PostMapping("/update-user")
