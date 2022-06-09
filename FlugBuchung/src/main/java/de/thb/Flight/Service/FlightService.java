@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.Optional;
 
 /**
  * Services should define all the CRUD functions of a specific class (objects)
@@ -35,17 +36,24 @@ import java.util.*;
 @RequiredArgsConstructor
 public class FlightService {
 
-    public final FlightRepository flightRepository;
+    public static final FlightRepository flightRepository = null;
 
-    public List<Flight> getAllFlights(){
+    public static List<Flight> getAllFlights(){
         return (List<Flight>) flightRepository.findAll();
     }
 
-    public Optional<Flight> getFlightById(long id){
-        return flightRepository.findById(id);
+    public static Optional<Flight> getFlightById(long id){
+        Optional<Flight> result = flightRepository.findById(id);
+        Flight flights;
+        if (result.isPresent()) {
+            flights = result.get();
+        } else {
+            throw new RuntimeException("Did not find flight id");
+        }
+        return Optional.of(flights);
     }
 
-    public List<Flight> getFlightByAbflugsort(String abflugsort){
+    public static List<Flight> getFlightByAbflugsort(String abflugsort){
         if(abflugsort != null){
             return flightRepository.searchFlightByAbflugsort(abflugsort);
         } else {
@@ -53,7 +61,7 @@ public class FlightService {
         }
     }
 
-    public List<Flight> getFlightByZielort(String Zielort){
+    public static List<Flight> getFlightByZielort(String Zielort){
         if(Zielort != null){
             return flightRepository.searchFlightByZielort(Zielort);
         } else {
@@ -61,7 +69,7 @@ public class FlightService {
         }
     }
 
-    public List<Flight> getFlightByDepartureDate(Date departureDate){
+    public static List<Flight> getFlightByDepartureDate(Date departureDate){
         if(departureDate != null){
             return flightRepository.searchFlightByDepartureDateAsc(departureDate);
         }else {
@@ -69,11 +77,11 @@ public class FlightService {
         }
     }
 
-    public List<Flight> getFlightByPriceAsc(){
+    public static List<Flight> getFlightByPriceAsc(){
         return flightRepository.searchFlightByPriceAsc();
     }
 
-    public List<Flight> getFlightByPriceDesc(){
+    public static List<Flight> getFlightByPriceDesc(){
         return flightRepository.searchFlightByPriceDesc();
     }
 
