@@ -1,4 +1,4 @@
-/*
+
 package de.thb.Flight.Controller;
 
 import de.thb.Flight.Entity.User;
@@ -13,7 +13,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.mail.MailException;
+import javax.validation.Valid;
 import javax.*;
 
 
@@ -32,16 +33,16 @@ public class AdminController {
     @Autowired
     UserService userService;
 
-
+    //Admin Schicht
     @GetMapping("/addUser")
-    public String viewAddUSerForm(Model model) {
+    public String viewAddUserForm(Model model) {
         model.addAttribute("user", new User());
         return "AdminAddUser";
     }
 
     @PostMapping("/addUser")
     @Validated
-    public String addUserByAdmin(@Valid User user, BindingResult result, Model model) {
+    public String addUserbyAdmin(@Valid User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "AdminAddUser";
         }
@@ -50,7 +51,7 @@ public class AdminController {
             model.addAttribute("exist", true);
             return "AdminAddUser";
         }
-        userService.creatUser(user);
+        userService.createUser(user);
         model.addAttribute("success", true);
         try {
 
@@ -62,4 +63,3 @@ public class AdminController {
     }
 
 }
-*/

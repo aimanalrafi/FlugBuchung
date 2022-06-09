@@ -1,6 +1,8 @@
 package de.thb.Flight.Service;
 import de.thb.Flight.Entity.User;
 import de.thb.Flight.Repository.UserRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -35,10 +37,23 @@ public class UserService {
             return null;
         }
     }
-    public User saveUser(User user){
+    public User createUser(User user){
 
         return this.userRepository.save(user);
     }
+
+    public User findByEmail(String email) {
+        return userRepository.getUserByEmail(email);
+    }
+
+    public boolean isUserPresent(String email) {
+        User user = userRepository.getUserByEmail(email);
+        if (user != null) {
+            return true;
+        }
+        return false;
+    }
+
 
 
     public List<User> getUserByVorname(String vorname){
