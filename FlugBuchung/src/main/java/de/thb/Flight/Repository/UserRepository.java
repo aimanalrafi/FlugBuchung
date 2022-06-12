@@ -1,25 +1,11 @@
 package de.thb.Flight.Repository;
 
-
 import de.thb.Flight.Entity.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.RepositoryDefinition;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-
-public interface UserRepository extends JpaRepository<User, Long> {
-    @Query("SELECT m from User m WHERE m.vorname=:vorname")
-    List<User> searchUserByVorname(String vorname);
-
-
-    @Query("SELECT m from User m WHERE m.nachname=:nachname")
-    List<User> searchUserByNachname(String Nachname);
-
-    @Query("SELECT m from User m WHERE m.email=:email")
-    User getUserByEmail(String Email);
-
+import java.math.BigInteger;
+@Repository
+public interface UserRepository extends CrudRepository<User, BigInteger> {
 
 }

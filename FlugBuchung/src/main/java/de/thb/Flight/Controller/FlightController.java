@@ -3,80 +3,49 @@ package de.thb.Flight.Controller;
 
 import de.thb.Flight.Entity.Flight;
 import de.thb.Flight.Service.FlightService;
+import de.thb.Flight.exceptions.RecordAlreadyPresentException;
+import de.thb.Flight.exceptions.RecordNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.math.BigInteger;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/Home")
+@RequestMapping("/Flight")
 public class FlightController {
 
+    @Autowired
+    FlightService flightService;
 
-    private final FlightService flightService;
-
-    @GetMapping("/flights")
-    public String showFlights(Model model) {
-        List<Flight>flights = FlightService.getAllFlights();
-        model.addAttribute("flights",flights);
-
-        return "flights";
+    @PostMapping("/addFlight")
+    @ExceptionHandler(RecordAlreadyPresentException.class)
+    public void addFlight(@RequestBody Flight flight) {
+        flightService.addFlight(flight);
     }
 
-    @GetMapping("/flightsById")
-    public String showFlightsById(@Param("Fid") long Fid, Model model) {
-        Optional<Flight> flights = FlightService.getFlightById(Fid);
-        model.addAttribute("flights",flights);
-
-        return "flights";
+    @GetMapping("/allFlight")
+    public Iterable<Flight> viewAllFlight() {
+        return flightService.viewAllFlight();
     }
 
-    @GetMapping("/flightsByAbflugsort")
-    public String showFlightsByAbflugsort(@Param("fAbflugsOrt") String fAbflugsort, Model model) {
-        List<Flight>flights = FlightService.getFlightByAbflugsort(fAbflugsort);
-        model.addAttribute("flights",flights);
-
-        return "flights";
+    @GetMapping("/viewFlight/{id}")
+    @ExceptionHandler(RecordNotFoundException.class)
+    public Flight viewFlight(@PathVariable("id") BigInteger flightNo) {
+        return flightService.viewFlight(flightNo);
     }
 
-    @GetMapping("/flightsByZielort")
-    public String showFlightsByZielort(@Param("fZielort") String fZielort, Model model) {
-        List<Flight> flights = FlightService.getFlightByZielort(fZielort);
-        model.addAttribute("flights", flights);
-
-        return "flights";
+    @PutMapping("/updateFlight")
+    @ExceptionHandler(RecordNotFoundException.class)
+    public void modifyFlight(@RequestBody Flight flight) {
+        flightService.modifyFlight(flight);
     }
 
-    @GetMapping("/flightsByDepartureDate")
-    public String showFlightsByDepartureDate(@Param("fDate") Date fDate, Model model) {
-        List<Flight> flights = FlightService.getFlightByDepartureDate(fDate);
-        model.addAttribute("flights", flights);
-
-        return "flights";
-    }
-
-    @GetMapping("/flightsByPriceAsc")
-    public String showFlightsByPriceAsc(Model model) {
-        List<Flight> flights = FlightService.getFlightByPriceAsc();
-        model.addAttribute("flights", flights);
-
-        return "flights";
-    }
-
-    @GetMapping("/flightsByPriceDesc")
-    public String showFlightsByPriceDesc(Model model) {
-        List<Flight> flights = FlightService.getFlightByPriceDesc();
-        model.addAttribute("flights", flights);
-
-        return "flights";
+    @DeleteMapping("/deleteFlight/{id}")
+    @ExceptionHandler(RecordNotFoundException.class)
+    public void removeFlight(@PathVariable("id") BigInteger flightNo) {
+        flightService.removeFlight(flightNo);
     }
 }
-

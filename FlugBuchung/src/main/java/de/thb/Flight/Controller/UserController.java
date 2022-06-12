@@ -1,67 +1,57 @@
 package de.thb.Flight.Controller;
-import de.thb.Flight.Entity.User ;
+
+
+import de.thb.Flight.Entity.User;
 import de.thb.Flight.Service.UserService;
+import de.thb.Flight.exceptions.RecordAlreadyPresentException;
+import de.thb.Flight.exceptions.RecordNotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Optional;
+import java.math.BigInteger;
 
-@RestController
+@Controller
+@AllArgsConstructor
+@RequestMapping("/User")
 public class UserController {
 
     @Autowired
-    private UserService userService ;
+    UserService userService;
 
+    @PostMapping("/createUser")
+    @ExceptionHandler(RecordAlreadyPresentException.class)
+    public void addUser(@RequestBody User newUser) {
 
-    @GetMapping(path = "/find-user")
-    public String getUserById(@RequestParam Long id) {
-        Optional<User> user = this.userService.getUserById(id);
-        if (user.isPresent()) {
-            return "NachName : " + user.get().getNachname()
-                    + " vorName : " + user.get().getVorname();
-        } else {
-            return "benutzer nicht da ! ";
-        }
+        userService.createUser(newUser);
     }
 
-    @GetMapping(path = "/delete-user")
-    public String deleteUserById(@RequestParam Long id) {
-        return this.userService.deleteUserById(id);
-    }
-    @PostMapping("/save-user")
-    public User saveUser(@RequestBody User user) {
-        return this.userService.createUser(user);
+    @GetMapping("/readAllUsers")
+    public Iterable<User> readAllUsers() {
+
+        return userService.displayAllUser();
     }
 
-    @PostMapping("/update-user")
-    public User updateUser(@RequestBody User user) {
-        return this.userService.updateUser(user);
+    @PutMapping("/updateUser")
+    @ExceptionHandler(RecordNotFoundException.class)
+    public void updateUser(@RequestBody User updateUser) {
+
+        userService.updateUser(updateUser);
     }
 
+    @GetMapping("/searchUser/{id}")
+    @ExceptionHandler(RecordNotFoundException.class)
+    public ResponseEntity<?> searchUserByID(@PathVariable("id") BigInteger userId) {
 
-    @GetMapping("/register")
-    public String viewRgisterPage(Model model) {
-        model.addAttribute("user", new User());
-        return "register";
-    }
-    @GetMapping("/default")
-    public String defaultAfterLogin(HttpServletRequest request) {
-        if (request.isUserInRole("ROLE_ADMIN")) {
-            return "redirect:/Admin/viewAdminPage";
-        }
-        return "redirect:/Tickts/Home";
-    }
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-    @GetMapping("/logout")
-    public String logout() {
-        return "redirect:/Tickts/Home";
+        return userService.findUserById(userId);
     }
 
+    @DeleteMapping("/deleteUser/{id}")
+    @ExceptionHandler(RecordNotFoundException.class)
+    public void deleteBookingByID(@PathVariable("id") BigInteger userId) {
 
+        userService.deleteUser(userId);
+    }
 }

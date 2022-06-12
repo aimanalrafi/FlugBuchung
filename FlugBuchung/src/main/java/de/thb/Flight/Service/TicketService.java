@@ -1,54 +1,20 @@
 package de.thb.Flight.Service;
 
-import de.thb.Flight.Entity.Flight;
-import de.thb.Flight.Entity.Seat;
 import de.thb.Flight.Entity.Ticket;
-import de.thb.Flight.Entity.User;
-import de.thb.Flight.Repository.TicketRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.http.ResponseEntity;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.math.BigInteger;
 
-@Service
-@RequiredArgsConstructor
-public class TicketService {
-    public final TicketRepository ticketRepository;
+public interface TicketService {
 
-    public void createTicket(User user, Flight flight, Seat seat)  {
-        LocalDateTime DateTicketCreated  = LocalDateTime.now();
-        Ticket ticket = new Ticket(user, flight, seat);
-        ticketRepository.save(ticket);
-    }
+    public ResponseEntity<?> createTicket(Ticket newTicket);
 
-    public List<Ticket> getAllTickets(){
-        return (List<Ticket>) ticketRepository.findAll();
-    }
+    public Ticket updateTicket(Ticket changedTicket);
 
-    public Optional<Ticket> getTicketByID(long id){
-        return ticketRepository.findById(id);
-    }
+    public String deleteTicket(BigInteger ticketId);
 
-    public Ticket getTicketByUser(User user){
-        return ticketRepository.selectByUser(user);
-    }
+    public Iterable<Ticket> displayAllTicket();
 
-    public void deleteTicketByUser(User user){
-        ticketRepository.deleteByUser(user);
-    }
-
-    public void deleteTicketById(long id){
-        ticketRepository.deleteById(id);
-    }
-
-
-
-
-
-
-
-
+    public ResponseEntity<?> findTicketById(BigInteger ticketId);
 
 }

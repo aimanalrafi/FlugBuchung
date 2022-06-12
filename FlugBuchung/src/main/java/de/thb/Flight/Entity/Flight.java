@@ -1,56 +1,52 @@
 package de.thb.Flight.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import org.hibernate.cfg.AnnotationBinder;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.math.BigInteger;
 
-//Flight
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Data
-@Table(name = "Flight")
+@Entity
+@Table(name = "flight")
 public class Flight {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    //flight nummer
-    private int nummer;
-    private String abflugsort;
-    private String zielort;
+    private BigInteger flightNo;
+    private String carrierName;
+    private String flightModel;
+    private int seatKaptazit;
 
-    @Temporal(TemporalType.DATE)
-    private Date departureDate; //time and date
 
-    @Temporal(TemporalType.TIME)
-    private Date departureTime; //time and date
+    @Override
+    public String toString() {
+        return "Flight [flightNo=" + flightNo + ",carrierName=" + carrierName + ",flightModel=" + flightModel
+                + ",seatKaptazit=" + seatKaptazit + "]";
+    }
 
-    @Temporal(TemporalType.DATE)
-    private Date arrivalDate; //time and date
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((carrierName == null) ? 0 : carrierName.hashCode());
+        result = prime * result + ((flightModel == null) ? 0 : flightModel.hashCode());
+        result = prime * result + ((flightNo == null) ? 0 : flightNo.hashCode());
+        result = prime * result + seatKaptazit;
+        return result;
 
-    @Temporal(TemporalType.TIME)
-    private Date arrivalTime; //time and date
 
-//    private float price;
+    }
 
-//    public float getPrice(float price){
-//        return this.price = Seat.getPrice();
-//    }
 
-    @OneToMany(mappedBy = "flight")
-    private List<Seat> seat;
 
-    @OneToMany(mappedBy = "flight")
-    private List<Ticket> ticket;
+
+
+
 
 
 
