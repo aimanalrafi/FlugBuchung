@@ -9,7 +9,7 @@ import de.thb.Flight.Service.AirportService;
 import de.thb.Flight.Service.FlightService;
 import de.thb.Flight.Service.PassengerService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +28,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-@NoArgsConstructor
+
 public class MainController {
 
     @Autowired
@@ -42,30 +42,27 @@ public class MainController {
 
 
     @GetMapping("/")
-    public String showHomePage() {
-        return "index";
-    }
-
-    @GetMapping("/airport/new")
     public String showAddAirportPage(Model model) {
         model.addAttribute("airport", new Airport());
         return "newAirport";
     }
 
-    @PostMapping("/airport/new")
-    public String saveAirport(@Valid @ModelAttribute("airport") Airport airport, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("errors", bindingResult.getAllErrors());
-            model.addAttribute("airport", new Airport());
-            return "newAirport";
+        @PostMapping("/airport/new")
+        public String saveAirport (@Valid @ModelAttribute("airport") Airport airport, BindingResult bindingResult, Model
+        model){
+            if (bindingResult.hasErrors()) {
+                model.addAttribute("errors", bindingResult.getAllErrors());
+                model.addAttribute("airport", new Airport());
+                return "newAirport";
+            }
+            airportService.saveAirport(airport);
+            model.addAttribute("airports", airportService.getAllAirportsPaged(0));
+            model.addAttribute("currentPage", 0);
+            return "airports";
         }
-        airportService.saveAirport(airport);
-        model.addAttribute("airports", airportService.getAllAirportsPaged(0));
-        model.addAttribute("currentPage", 0);
-        return "airports";
-    }
+
     @GetMapping("/airport/delete")
-    public String deleteAirport(@PathParam("airportId") int airportId, Model model){
+    public String deleteAirport(@PathParam("airportId") int airportId, Model model) {
         airportService.deleteAirport(airportId);
         model.addAttribute("airports", airportService.getAllAirportsPaged(0));
         model.addAttribute("currentPage", 0);
@@ -99,7 +96,7 @@ public class MainController {
     }
 
     @GetMapping("/aircraft/delete")
-    public String deleteAircraft(@PathParam("aircraftId") long aircraftId, Model model){
+    public String deleteAircraft(@PathParam("aircraftId") long aircraftId, Model model) {
         aircraftService.deleteAircraftById(aircraftId);
         model.addAttribute("aircrafts", aircraftService.getAllAircraftsPaged(0));
         model.addAttribute("currentPage", 0);
@@ -158,7 +155,7 @@ public class MainController {
     }
 
     @GetMapping("/flight/delete")
-    public String deleteFlight(@PathParam("flightId") long flightId, Model model){
+    public String deleteFlight(@PathParam("flightId") long flightId, Model model) {
         flightService.deleteFlightById(flightId);
         model.addAttribute("flights", flightService.getAllFlightsPaged(0));
         model.addAttribute("currentPage", 0);
@@ -195,9 +192,9 @@ public class MainController {
             return "searchFlight";
         }
         List<Flight> flights = flightService.getAllFlightsByAirportAndDepartureTime(depAirport, destAirport, deptTime);
-        if(flights.isEmpty()){
+        if (flights.isEmpty()) {
             model.addAttribute("notFound", "No Record Found!");
-        }else{
+        } else {
             model.addAttribute("flights", flights);
         }
 
@@ -227,9 +224,9 @@ public class MainController {
             return "bookFlight";
         }
         List<Flight> flights = flightService.getAllFlightsByAirportAndDepartureTime(depAirport, destAirport, deptTime);
-        if(flights.isEmpty()){
+        if (flights.isEmpty()) {
             model.addAttribute("notFound", "No Record Found!");
-        }else{
+        } else {
             model.addAttribute("flights", flights);
         }
         model.addAttribute("airports", airportService.getAllAirports());
@@ -276,7 +273,7 @@ public class MainController {
             }
             if (passenger != null) {
                 return "verifyBooking";
-            }else{
+            } else {
                 model.addAttribute("notFound", "Not Found");
                 return "verifyBooking";
             }
@@ -288,7 +285,7 @@ public class MainController {
     }
 
     @PostMapping("/flight/book/cancel")
-    public String cancelTicket(@RequestParam("passengerId") long passengerId, Model model){
+    public String cancelTicket(@RequestParam("passengerId") long passengerId, Model model) {
         passengerService.deletePassengerById(passengerId);
         model.addAttribute("flights", flightService.getAllFlightsPaged(0));
         model.addAttribute("currentPage", 0);
@@ -296,22 +293,12 @@ public class MainController {
     }
 
     @GetMapping("passengers")
-    public String showPassengerList(@RequestParam long flightId, Model model){
+    public String showPassengerList(@RequestParam long flightId, Model model) {
         List<Passenger> passengers = flightService.getFlightById(flightId).getPassengers();
         model.addAttribute("passengers", passengers);
         model.addAttribute("flight", flightService.getFlightById(flightId));
         return "passengers";
     }
 
-    @GetMapping("/login")
-    public String showLoginPage(){
-        return "login";
-    }
 
-
-
-    @GetMapping("fancy")
-    public String showLoginPage1(){
-        return "index";
-    }
 }

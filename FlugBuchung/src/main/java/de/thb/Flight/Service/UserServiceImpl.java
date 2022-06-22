@@ -4,32 +4,56 @@ package de.thb.Flight.Service;
 import de.thb.Flight.Entity.User;
 import de.thb.Flight.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 
 
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final UserRepository UserRepository;
     @Autowired
-    private UserRepository userRepository;
+private UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Username " + username + " not found"));
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-                getAuthorities(user));
+
+
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository){
+        this.UserRepository = userRepository;
     }
 
-    private static Collection<? extends GrantedAuthority> getAuthorities(User user) {
-        String[] userRoles = user.getRoles().stream().map((role) -> role.getName()).toArray(String[]::new);
-        Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRoles);
-        return authorities;
+    @Override
+    public Page<User> getAllUserPaged(int pageNum) {
+        return userRepository.findAll(PageRequest.of(pageNum,5, Sort.by("lastName")));
+
+    }
+
+    @Override
+    public List<User> getAllUser() {
+        return userRepository.findAll();
+
+    }
+
+    @Override
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId).orElse(null);
+
+    }
+
+    @Override
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
+
+
+    @Override
+    public void deleteUserById(Long userId) {
+        userRepository.deleteById(userId);
+
     }
 }

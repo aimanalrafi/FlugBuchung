@@ -20,14 +20,11 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long userId;
 
     @Column(nullable = false)
     @NotBlank(message = "* First Name is required")
     private String firstname;
-
-    @Column(name = "middlename", nullable = true)
-    private String middlename;
 
     @Column(nullable = false)
     @NotBlank(message = "* Last Name is required")
@@ -51,8 +48,8 @@ public class User {
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "users_roles",
-            joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
-            inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")})
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private List<Role> roles;
 
 }
